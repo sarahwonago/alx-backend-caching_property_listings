@@ -4,10 +4,10 @@ from django.http import JsonResponse
 from .models import Property
 
 
-# Cache this view for 15 minutes (900 seconds)
+# Cache this view for 15 minutes
 @cache_page(60 * 15)
 def property_list(request):
     properties = Property.objects.all().values(
         "id", "title", "description", "price", "location", "created_at"
     )
-    return JsonResponse(list(properties), safe=False)
+    return JsonResponse({"data": list(properties)})
